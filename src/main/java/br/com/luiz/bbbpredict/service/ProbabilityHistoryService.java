@@ -2,6 +2,7 @@ package br.com.luiz.bbbpredict.service;
 
 import br.com.luiz.bbbpredict.dto.probability.ContestantWinProbabilityResponse;
 import br.com.luiz.bbbpredict.dto.probability.ProbabilityHistoryResponse;
+import br.com.luiz.bbbpredict.infra.exception.ResourceNotFoundException;
 import br.com.luiz.bbbpredict.mapper.ProbabilityHistoryMapper;
 import br.com.luiz.bbbpredict.model.Contestant;
 import br.com.luiz.bbbpredict.model.ProbabilityHistory;
@@ -36,14 +37,14 @@ public class ProbabilityHistoryService {
 
     public ProbabilityHistoryResponse findById(Long id) {
         ProbabilityHistory probabilityHistory = probabilityHistoryRepository.findById(id)
-                .orElseThrow(() -> new EntityNotFoundException("Probability History not found with given id"));
+                .orElseThrow(() -> new ResourceNotFoundException(id));
         return probabilityHistoryMapper.toDto(probabilityHistory);
     }
 
 
     public ProbabilityHistoryResponse saveWinProbabilityByContestantId(Long contestantId) {
         Contestant contestant = contestantRepository.findById(contestantId)
-                .orElseThrow(() -> new EntityNotFoundException("Contestant not found with given id"));
+                .orElseThrow(() -> new ResourceNotFoundException(contestantId));
         Double buyPrice = marketService.fetchBuyPrice(contestant.getClobTokenId());
         Double sellPrice = marketService.fetchSellPrice(contestant.getClobTokenId());
         BigDecimal probability = calculateMidpoint(buyPrice, sellPrice);
@@ -71,7 +72,7 @@ public class ProbabilityHistoryService {
 
     public void delete(Long id) {
         if (!probabilityHistoryRepository.existsById(id)) {
-            throw new EntityNotFoundException("Probability History not found with given id");
+            throw new ResourceNotFoundException(id);
         }
         probabilityHistoryRepository.deleteById(id);
     }

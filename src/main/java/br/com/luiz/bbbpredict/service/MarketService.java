@@ -1,6 +1,7 @@
 package br.com.luiz.bbbpredict.service;
 
 import br.com.luiz.bbbpredict.dto.MarketPriceResponse;
+import br.com.luiz.bbbpredict.infra.exception.InvalidClobTokenIdException;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestClient;
 
@@ -19,7 +20,7 @@ public class MarketService {
                 .body(MarketPriceResponse.class);
 
         if (response == null && response.price() == null) {
-            throw new RuntimeException("Preço do token nulo");
+            throw new InvalidClobTokenIdException("Invalid clob token id");
         }
         return response.price();
 
@@ -30,7 +31,7 @@ public class MarketService {
                 .body(MarketPriceResponse.class);
 
         if (response == null && response.price() == null) {
-            throw new RuntimeException("Preço do token nulo");
+            throw new InvalidClobTokenIdException("Invalid clob token id");
         }
         return response.price();
 

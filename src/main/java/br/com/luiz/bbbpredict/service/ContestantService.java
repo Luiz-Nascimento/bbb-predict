@@ -3,6 +3,7 @@ package br.com.luiz.bbbpredict.service;
 import br.com.luiz.bbbpredict.dto.contestant.ContestantPatch;
 import br.com.luiz.bbbpredict.dto.contestant.ContestantRequest;
 import br.com.luiz.bbbpredict.dto.contestant.ContestantResponse;
+import br.com.luiz.bbbpredict.infra.exception.ResourceNotFoundException;
 import br.com.luiz.bbbpredict.mapper.ContestantMapper;
 import br.com.luiz.bbbpredict.model.Contestant;
 import br.com.luiz.bbbpredict.repository.ContestantRepository;
@@ -25,7 +26,7 @@ public class ContestantService {
 
     public ContestantResponse findById(Long id) {
         return contestantMapper.toDto(contestantRepository.findById(id)
-                .orElseThrow(() -> new EntityNotFoundException("Contestant not found with given id")));
+                .orElseThrow(() -> new ResourceNotFoundException(id)));
     }
     public List<ContestantResponse> findAll() {
         return contestantMapper.toDtoList(contestantRepository.findAll());
@@ -38,7 +39,7 @@ public class ContestantService {
     @Transactional
     public ContestantResponse patch(Long id, ContestantPatch patch) {
         Contestant contestant = contestantRepository.findById(id)
-                .orElseThrow(() -> new EntityNotFoundException("Contestant not found with given id"));
+                .orElseThrow(() -> new ResourceNotFoundException(id));
         Contestant contestantUpdated = contestantMapper.patchFromDto(patch, contestant);
         return contestantMapper.toDto(contestantRepository.save(contestantUpdated));
 
@@ -46,7 +47,7 @@ public class ContestantService {
     @Transactional
     public void deactivate(Long id) {
         Contestant contestant = contestantRepository.findById(id).orElseThrow(() ->
-                new EntityNotFoundException("Contestant not found with given id"));
+                new ResourceNotFoundException(id));
 
         contestant.setActive(false);
 

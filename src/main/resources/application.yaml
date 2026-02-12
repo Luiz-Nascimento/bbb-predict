@@ -20,6 +20,13 @@ spring:
           time_zone: UTC
     database-platform: org.hibernate.dialect.PostgreSQLDialect
 
+logging:
+  pattern:
+    console: "%clr(%d{HH:mm:ss.SSS}){faint} %clr(%5p) %clr(---){faint} %clr(%-40.40logger{39}){cyan} %clr(:){faint} %m%n%wEx"
+  level:
+    root: info
+    br.com.luiz.bbbpredict.infra.exception.GlobalExceptionHandler: ERROR
+
   output:
     ansi:
       enabled: always
