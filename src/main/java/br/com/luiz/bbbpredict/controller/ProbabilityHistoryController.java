@@ -20,11 +20,22 @@ public class ProbabilityHistoryController {
     public List<ProbabilityHistoryResponse> listAll() {
         return probabilityHistoryService.findAll();
     }
+    @GetMapping("/{id}")
+    public ResponseEntity<ProbabilityHistoryResponse> findById(@PathVariable Long id) {
+        ProbabilityHistoryResponse response = probabilityHistoryService.findById(id);
+        return ResponseEntity.ok(response);
+    }
 
     @PostMapping("/{contestantId}")
     public ResponseEntity<ProbabilityHistoryResponse> saveWinProbabilityHistoryByContestantId
             (@PathVariable Long contestantId){
         ProbabilityHistoryResponse response = probabilityHistoryService.saveWinProbabilityByContestantId(contestantId);
         return ResponseEntity.ok(response);
+    }
+
+    @DeleteMapping("/{id}")
+    public ResponseEntity<Void> delete(@PathVariable Long id) {
+        probabilityHistoryService.delete(id);
+        return ResponseEntity.noContent().build();
     }
 }

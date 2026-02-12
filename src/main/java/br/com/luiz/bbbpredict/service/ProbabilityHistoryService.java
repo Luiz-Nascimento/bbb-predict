@@ -34,6 +34,12 @@ public class ProbabilityHistoryService {
         return probabilityHistoryMapper.toDtoList(probabilityHistoryRepository.findAll());
     }
 
+    public ProbabilityHistoryResponse findById(Long id) {
+        ProbabilityHistory probabilityHistory = probabilityHistoryRepository.findById(id)
+                .orElseThrow(() -> new EntityNotFoundException("Probability History not found with given id"));
+        return probabilityHistoryMapper.toDto(probabilityHistory);
+    }
+
 
     public ProbabilityHistoryResponse saveWinProbabilityByContestantId(Long contestantId) {
         Contestant contestant = contestantRepository.findById(contestantId)
@@ -61,5 +67,12 @@ public class ProbabilityHistoryService {
         // RoundingMode.HALF_EVEN é o padrão bancário para arredondamento
         return bBuy.add(bSell)
                 .divide(BigDecimal.valueOf(2), 4, RoundingMode.HALF_EVEN);
+    }
+
+    public void delete(Long id) {
+        if (!probabilityHistoryRepository.existsById(id)) {
+            throw new EntityNotFoundException("Probability History not found with given id");
+        }
+        probabilityHistoryRepository.deleteById(id);
     }
 }
