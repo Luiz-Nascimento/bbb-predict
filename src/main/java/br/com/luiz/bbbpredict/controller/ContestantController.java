@@ -1,5 +1,6 @@
 package br.com.luiz.bbbpredict.controller;
 
+import br.com.luiz.bbbpredict.dto.contestant.ContestantPatch;
 import br.com.luiz.bbbpredict.dto.contestant.ContestantRequest;
 import br.com.luiz.bbbpredict.dto.contestant.ContestantResponse;
 import br.com.luiz.bbbpredict.service.ContestantService;
@@ -39,6 +40,13 @@ public class ContestantController {
     }
 
     @PatchMapping("/{id}")
+    public ResponseEntity<ContestantResponse> patch(@PathVariable Long id,
+                                                    @RequestBody ContestantPatch patch) {
+        ContestantResponse response = contestantService.patch(id, patch);
+        return ResponseEntity.ok(response);
+    }
+
+    @DeleteMapping("/{id}")
     public ResponseEntity<Void> deactivate(@PathVariable Long id) {
         contestantService.deactivate(id);
         return ResponseEntity.noContent().build();

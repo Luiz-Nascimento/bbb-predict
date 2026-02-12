@@ -13,20 +13,26 @@ public class MarketService {
         this.restClient = restClientBuilder.baseUrl("https://clob.polymarket.com").build();
     }
 
-    public MarketPriceResponse fetchBuyPrice(String tokenId) {
+    public Double fetchBuyPrice(String tokenId) {
         MarketPriceResponse response = restClient.get().uri("/price?token_id={tokenId}&side=buy", tokenId)
                 .retrieve()
                 .body(MarketPriceResponse.class);
 
-        return response;
+        if (response == null && response.price() == null) {
+            throw new RuntimeException("Preço do token nulo");
+        }
+        return response.price();
 
     }
-    public MarketPriceResponse fetchSellPrice(String tokenId) {
+    public Double fetchSellPrice(String tokenId) {
         MarketPriceResponse response = restClient.get().uri("/price?token_id={tokenId}&side=sell", tokenId)
                 .retrieve()
                 .body(MarketPriceResponse.class);
 
-        return response;
+        if (response == null && response.price() == null) {
+            throw new RuntimeException("Preço do token nulo");
+        }
+        return response.price();
 
     }
 

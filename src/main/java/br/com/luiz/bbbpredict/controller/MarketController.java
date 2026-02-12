@@ -18,9 +18,9 @@ public class MarketController {
         this.marketService = marketService;
     }
 
-    @GetMapping("/buyPrice/{tokenId}")
-    public ResponseEntity<MarketPriceResponse> fetchMarketBuyPrice(@PathVariable String tokenId) {
-        MarketPriceResponse response = marketService.fetchBuyPrice(tokenId);
-        return ResponseEntity.ok(response);
-    }
+//    @GetMapping("/buyPrice/{tokenId}")
+//    public ResponseEntity<MarketPriceResponse> fetchMarketBuyPrice(@PathVariable String tokenId) {
+//        MarketPriceResponse response = marketService.fetchBuyPrice(tokenId);
+//        return ResponseEntity.ok(response);
+//    }
 }

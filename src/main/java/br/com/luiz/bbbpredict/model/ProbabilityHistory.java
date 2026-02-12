@@ -2,6 +2,7 @@ package br.com.luiz.bbbpredict.model;
 
 import jakarta.persistence.*;
 
+import java.math.BigDecimal;
 import java.time.Instant;
 import java.util.Objects;
 
@@ -17,8 +18,8 @@ public class ProbabilityHistory {
     @JoinColumn(name = "contestant_id", nullable = false)
     private Contestant contestant;
 
-    @Column(nullable = false)
-    private Double probability;
+    @Column(nullable = false, precision = 5, scale = 4)
+    private BigDecimal probability;
     @Column(nullable = false)
     private Instant timestamp;
 
@@ -41,11 +42,11 @@ public class ProbabilityHistory {
         this.contestant = contestant;
     }
 
-    public Double getProbability() {
+    public BigDecimal getProbability() {
         return probability;
     }
 
-    public void setProbability(Double probability) {
+    public void setProbability(BigDecimal probability) {
         this.probability = probability;
     }
 

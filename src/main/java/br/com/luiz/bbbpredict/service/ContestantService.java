@@ -1,5 +1,6 @@
 package br.com.luiz.bbbpredict.service;
 
+import br.com.luiz.bbbpredict.dto.contestant.ContestantPatch;
 import br.com.luiz.bbbpredict.dto.contestant.ContestantRequest;
 import br.com.luiz.bbbpredict.dto.contestant.ContestantResponse;
 import br.com.luiz.bbbpredict.mapper.ContestantMapper;
@@ -33,6 +34,14 @@ public class ContestantService {
         Contestant contestant = contestantMapper.toEntity(request);
         ContestantResponse response = contestantMapper.toDto(contestantRepository.save(contestant));
         return response;
+    }
+    @Transactional
+    public ContestantResponse patch(Long id, ContestantPatch patch) {
+        Contestant contestant = contestantRepository.findById(id)
+                .orElseThrow(() -> new EntityNotFoundException("Contestant not found with given id"));
+        Contestant contestantUpdated = contestantMapper.patchFromDto(patch, contestant);
+        return contestantMapper.toDto(contestantRepository.save(contestantUpdated));
+
     }
     @Transactional
     public void deactivate(Long id) {
