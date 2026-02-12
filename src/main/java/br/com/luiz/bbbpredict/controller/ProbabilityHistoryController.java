@@ -26,6 +26,12 @@ public class ProbabilityHistoryController {
         return ResponseEntity.ok(response);
     }
 
+    @PostMapping("/force-update")
+    public ResponseEntity<Void> forceUpdate() {
+        probabilityHistoryService.updateAllProbabilities();
+        return ResponseEntity.ok().build();
+    }
+
     @PostMapping("/{contestantId}")
     public ResponseEntity<ProbabilityHistoryResponse> saveWinProbabilityHistoryByContestantId
             (@PathVariable Long contestantId){
