@@ -46,6 +46,13 @@ public class ProbabilityHistoryService {
         return probabilityHistoryMapper.toDto(probabilityHistory);
     }
 
+    public List<ProbabilityHistoryResponse> findLatestTwoProbabilityByContestantName(String name) {
+        if (!contestantRepository.existsByName(name)) {
+            throw new ResourceNotFoundException(name);
+        }
+        return probabilityHistoryMapper.toDtoList(probabilityHistoryRepository.findFirst2ByContestantNameOrderByTimestampDesc(name));
+    }
+
 
     public ProbabilityHistoryResponse saveWinProbabilityByContestantId(Long contestantId) {
         Contestant contestant = contestantRepository.findById(contestantId)

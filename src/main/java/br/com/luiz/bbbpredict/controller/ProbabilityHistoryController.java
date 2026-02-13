@@ -26,6 +26,11 @@ public class ProbabilityHistoryController {
         return ResponseEntity.ok(response);
     }
 
+    @GetMapping("latest-two/{name}")
+    public List<ProbabilityHistoryResponse> findLatestTwoByContestantName(@PathVariable String name) {
+        return probabilityHistoryService.findLatestTwoProbabilityByContestantName(name);
+    }
+
     @PostMapping("/force-update")
     public ResponseEntity<Void> forceUpdate() {
         probabilityHistoryService.updateAllProbabilities();

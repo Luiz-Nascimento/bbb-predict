@@ -9,4 +9,6 @@ import java.util.List;
 @Repository
 public interface ContestantRepository extends JpaRepository<Contestant, Long> {
     List<Contestant> findByActiveTrue();
+
+    boolean existsByName(String name);
 }
