@@ -1,5 +1,6 @@
 package br.com.luiz.bbbpredict.service;
 
+import br.com.luiz.bbbpredict.infra.exception.TwitterApiException;
 import com.github.scribejava.apis.TwitterApi;
 import com.github.scribejava.core.builder.ServiceBuilder;
 import com.github.scribejava.core.model.OAuth1AccessToken;
@@ -53,7 +54,7 @@ public class TwitterPublisher {
                 .body(body)
                 .retrieve()
                 .onStatus(HttpStatusCode::isError, (req, res) -> {
-                    throw new RuntimeException("Erro na API do X. Status: " + res.getStatusCode());
+                    throw new TwitterApiException("Unexpected error while consuming twitter api: ", res.getStatusCode());
                 })
                 .toBodilessEntity();
     }
