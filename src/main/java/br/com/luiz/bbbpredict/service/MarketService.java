@@ -19,7 +19,7 @@ public class MarketService {
                 .retrieve()
                 .body(MarketPriceResponse.class);
 
-        if (response == null && response.price() == null) {
+        if (response == null || response.price() == null) {
             throw new InvalidClobTokenIdException("Invalid clob token id");
         }
         return response.price();
@@ -30,7 +30,7 @@ public class MarketService {
                 .retrieve()
                 .body(MarketPriceResponse.class);
 
-        if (response == null && response.price() == null) {
+        if (response == null || response.price() == null) {
             throw new InvalidClobTokenIdException("Invalid clob token id");
         }
         return response.price();
