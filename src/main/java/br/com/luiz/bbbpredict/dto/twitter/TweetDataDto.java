@@ -4,7 +4,6 @@ import java.math.BigDecimal;
 
 public record TweetDataDto(
         BigDecimal currentProbabilityPercent,
-        BigDecimal variationPercent,
         String contestantName
 ) {
 }

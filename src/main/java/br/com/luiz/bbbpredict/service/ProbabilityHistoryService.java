@@ -1,5 +1,6 @@
 package br.com.luiz.bbbpredict.service;
 
+import br.com.luiz.bbbpredict.dto.probability.ContestantVariationProjection;
 import br.com.luiz.bbbpredict.dto.probability.ContestantWinProbabilityResponse;
 import br.com.luiz.bbbpredict.dto.probability.ProbabilityHistoryResponse;
 import br.com.luiz.bbbpredict.infra.exception.ResourceNotFoundException;
@@ -46,11 +47,24 @@ public class ProbabilityHistoryService {
         return probabilityHistoryMapper.toDto(probabilityHistory);
     }
 
+    public ProbabilityHistoryResponse findMostRecentProbabilityByContestantId(Long id) {
+        ProbabilityHistory probabilityHistory = probabilityHistoryRepository.findFirstByContestantIdOrderByTimestampDesc(id)
+                .orElseThrow(() -> new ResourceNotFoundException(id));
+
+        return probabilityHistoryMapper.toDto(probabilityHistory);
+    }
+
     public List<ProbabilityHistoryResponse> findLatestTwoProbabilityByContestantName(String name) {
         if (!contestantRepository.existsByName(name)) {
             throw new ResourceNotFoundException(name);
         }
         return probabilityHistoryMapper.toDtoList(probabilityHistoryRepository.findFirst2ByContestantNameOrderByTimestampDesc(name));
+    }
+    public List<ProbabilityHistory> findLatestTwoProbabilityByContestantId(Long id) {
+        if (!contestantRepository.existsById(id)) {
+            throw new ResourceNotFoundException(id);
+        }
+        return probabilityHistoryRepository.findFirst2ByContestantIdOrderByTimestampDesc(id);
     }
 
 

@@ -44,6 +44,10 @@ public class ContestantService {
         return contestantMapper.toDto(contestantRepository.save(contestantUpdated));
 
     }
+
+    public List<Contestant> findAllActive() {
+        return contestantRepository.findByActiveTrue();
+    }
     @Transactional
     public void deactivate(Long id) {
         Contestant contestant = contestantRepository.findById(id).orElseThrow(() ->

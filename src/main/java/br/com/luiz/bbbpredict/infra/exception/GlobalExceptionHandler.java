@@ -97,5 +97,21 @@ public class GlobalExceptionHandler {
         return ResponseEntity.status(status).body(response);
     }
 
+    @ExceptionHandler(TwitterIntegrationException.class)
+    public ResponseEntity<RestErrorMessage> handleTwitterIntegrationExceptions(
+            TwitterIntegrationException exception, HttpServletRequest request) {
+        HttpStatus status = HttpStatus.BAD_GATEWAY;
+
+        RestErrorMessage response = new RestErrorMessage(
+                Instant.now(),
+                status.value(),
+                "Twitter integration exception",
+                exception.getMessage(),
+                request.getRequestURI()
+        );
+        return ResponseEntity.status(status).body(response);
+    }
+
+
 
 }
