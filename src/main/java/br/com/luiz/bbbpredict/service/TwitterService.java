@@ -1,9 +1,6 @@
 package br.com.luiz.bbbpredict.service;
 
-import br.com.luiz.bbbpredict.dto.probability.ProbabilityHistoryResponse;
-import br.com.luiz.bbbpredict.dto.twitter.TweetDataDto;
 import br.com.luiz.bbbpredict.model.ProbabilityHistory;
-import br.com.luiz.bbbpredict.repository.ProbabilityHistoryRepository;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;

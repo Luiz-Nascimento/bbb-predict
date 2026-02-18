@@ -35,6 +35,10 @@ twitter:
     token: ${TWITTER_ACCESS_TOKEN}
     secret: ${TWITTER_ACCESS_SECRET}
 
+security:
+  api:
+    key: ${API_KEY}
+
   output:
     ansi:
       enabled: always
