@@ -1,0 +1,21 @@
+version: "3.9"
+
+services:
+
+  api:
+    build: .
+    container_name: bbb-api
+
+    extra_hosts:
+      - "host.docker.internal:host-gateway"
+    environment:
+      - API_KEY=${API_KEY}
+      - DB_URL=${DB_URL}
+      - DB_USERNAME=${DB_USERNAME}
+      - DB_PASSWORD=${DB_PASSWORD}
+      - TWITTER_ACCESS_SECRET=${TWITTER_ACCESS_SECRET}
+      - TWITTER_ACCESS_TOKEN=${TWITTER_ACCESS_TOKEN}
+      - TWITTER_API_KEY=${TWITTER_API_KEY}
+      - TWITTER_API_SECRET=${TWITTER_API_SECRET}
+    ports:
+      - "8080:8080"
