@@ -5,9 +5,9 @@ services:
   api:
     build: .
     container_name: bbb-api
-
-    extra_hosts:
-      - "host.docker.internal:host-gateway"
+    dns:
+      - 8.8.8.8
+      - 8.8.4.4
     environment:
       - API_KEY=${API_KEY}
       - DB_URL=${DB_URL}
