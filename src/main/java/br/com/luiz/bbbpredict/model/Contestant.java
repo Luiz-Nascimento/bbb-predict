@@ -19,6 +19,9 @@ public class Contestant {
     @Column(nullable = false)
     private boolean active = true;
 
+    private String standardPhotoUrl;
+
+
     public Contestant() {
     }
 
@@ -29,6 +32,15 @@ public class Contestant {
     public void setId(Long id) {
         this.id = id;
     }
+
+    public String getStandardPhotoUrl() {
+        return standardPhotoUrl;
+    }
+
+    public void setStandardPhotoUrl(String standardPhotoUrl) {
+        this.standardPhotoUrl = standardPhotoUrl;
+    }
+
 
     public String getName() {
         return name;

@@ -4,6 +4,7 @@ public record ContestantResponse(
         Long id,
         String name,
         String clobTokenId,
+        String standardPhotoUrl,
         Boolean active
 ) {
 }
