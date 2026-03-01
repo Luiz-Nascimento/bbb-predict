@@ -1,13 +1,10 @@
 package br.com.luiz.bbbpredict.scheduler;
 
 import br.com.luiz.bbbpredict.model.Contestant;
-import br.com.luiz.bbbpredict.model.ProbabilityHistory;
-import br.com.luiz.bbbpredict.repository.ContestantRepository;
-import br.com.luiz.bbbpredict.repository.ProbabilityHistoryRepository;
 import br.com.luiz.bbbpredict.service.ContestantService;
 import br.com.luiz.bbbpredict.service.ProbabilityHistoryService;
-import br.com.luiz.bbbpredict.service.TwitterPublisher;
-import br.com.luiz.bbbpredict.service.TwitterService;
+import br.com.luiz.bbbpredict.service.TwitterClient;
+import br.com.luiz.bbbpredict.service.TweetGenerator;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.scheduling.TaskScheduler;
@@ -23,14 +20,14 @@ public class PredictionScheduler {
 
     private static final Logger log = LoggerFactory.getLogger(PredictionScheduler.class);
 
-    private final TwitterService twitterService;
-    private final TwitterPublisher twitterPublisher;
+    private final TweetGenerator tweetGenerator;
+    private final TwitterClient twitterClient;
     private final ContestantService contestantService;
     private final TaskScheduler taskScheduler;
 
-    public PredictionScheduler(TwitterService twitterService, TwitterPublisher twitterPublisher, ProbabilityHistoryService probabilityHistoryService, ContestantService contestantService, TaskScheduler taskScheduler) {
-        this.twitterService = twitterService;
-        this.twitterPublisher = twitterPublisher;
+    public PredictionScheduler(TweetGenerator tweetGenerator, TwitterClient twitterClient, ProbabilityHistoryService probabilityHistoryService, ContestantService contestantService, TaskScheduler taskScheduler) {
+        this.tweetGenerator = tweetGenerator;
+        this.twitterClient = twitterClient;
         this.contestantService = contestantService;
         this.taskScheduler = taskScheduler;
     }
@@ -66,8 +63,8 @@ public class PredictionScheduler {
     private void publishTweetForContestant(Contestant contestant) {
         try {
             log.debug("Publishing tweet from contestant: {}", contestant.getName());
-            String tweetContent = twitterService.tweetGenerator(contestant.getId());
-            twitterPublisher.publishTweet(tweetContent);
+            String tweetContent = tweetGenerator.tweetGenerator(contestant.getId());
+            twitterClient.publishTweet(tweetContent);
             log.info("Tweet published successfully for contestant: {}", contestant.getName());
         } catch (Exception e) {
             log.error("An unexpected error has occurred while publishing tweet for contestant: {}", contestant.getName(), e);

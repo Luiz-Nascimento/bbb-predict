@@ -10,14 +10,14 @@ import java.util.List;
 
 
 @Service
-public class TwitterService {
+public class TweetGenerator {
 
-    private static final Logger log = LoggerFactory.getLogger(TwitterService.class);
+    private static final Logger log = LoggerFactory.getLogger(TweetGenerator.class);
 
 
     private final ProbabilityHistoryService probabilityHistoryService;
 
-    public TwitterService(ProbabilityHistoryService probabilityHistoryService) {
+    public TweetGenerator(ProbabilityHistoryService probabilityHistoryService) {
 
         this.probabilityHistoryService = probabilityHistoryService;
     }

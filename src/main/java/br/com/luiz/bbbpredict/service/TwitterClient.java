@@ -17,13 +17,13 @@ import java.util.Map;
 
 
 @Service
-public class TwitterPublisher {
+public class TwitterClient {
 
     private final RestClient restClient;
     private final OAuth10aService oauthService;
     private final OAuth1AccessToken accessToken;
 
-    public TwitterPublisher(
+    public TwitterClient(
             @Value("${twitter.api.key}") String apiKey,
             @Value("${twitter.api.secret}") String apiSecret,
             @Value("${twitter.access.token}") String token,
