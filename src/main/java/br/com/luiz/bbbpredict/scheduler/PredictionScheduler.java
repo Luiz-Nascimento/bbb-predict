@@ -11,6 +11,7 @@ import org.springframework.scheduling.TaskScheduler;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
 
+import java.nio.file.Path;
 import java.time.Instant;
 import java.util.List;
 import java.util.concurrent.ThreadLocalRandom;
@@ -31,7 +32,7 @@ public class PredictionScheduler {
         this.contestantService = contestantService;
         this.taskScheduler = taskScheduler;
     }
-    @Scheduled(cron = "0 0 16 * * *", zone = "America/Sao_Paulo")
+    @Scheduled(cron = "0 5 14 * * *", zone = "America/Sao_Paulo")
     public void planDailyTweets() {
         log.info("Planning daily tweet post routine...");
 
@@ -64,7 +65,19 @@ public class PredictionScheduler {
         try {
             log.debug("Publishing tweet from contestant: {}", contestant.getName());
             String tweetContent = tweetGenerator.tweetGenerator(contestant.getId());
-            twitterClient.publishTweet(tweetContent);
+
+            String mediaId = null;
+            if (contestant.getStandardPhotoUrl() != null) {
+                try {
+                    byte[] imageBytes = twitterClient.downloadImage(contestant.getStandardPhotoUrl());
+                    String filename = Path.of(contestant.getStandardPhotoUrl()).getFileName().toString();
+                    mediaId = twitterClient.uploadMedia(imageBytes, filename);
+                } catch (Exception e) {
+                    log.warn("Could not process photo for contestant {}, publishing without image: {}",
+                            contestant.getName(), e.getMessage());
+                }
+            }
+            twitterClient.publishTweet(tweetContent, mediaId);
             log.info("Tweet published successfully for contestant: {}", contestant.getName());
         } catch (Exception e) {
             log.error("An unexpected error has occurred while publishing tweet for contestant: {}", contestant.getName(), e);
