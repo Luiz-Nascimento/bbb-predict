@@ -39,15 +39,17 @@ public class TweetGenerator {
 
 
         return """
-              Probabilidade de vencer segundo dados do Polymarket:
-              
-              Participante: %s
-              Chance de vencer: %.2f%%
-              Variação em relação a última coleta: %s%%
-              
-              #BBB26 #BBBPredict
-              """.formatted(
-                      contestantName, winPercentage, variationFormatted);
+          🏠 Quem vai ganhar o #BBB26?
+          
+          👤%s
+          🏆 Chance de vencer: %.2f%%
+          📈 Variação: %s%%
+          
+          📊 Dados: @Polymarket
+          📸 Foto: @bbb
+          
+          #BBBPredict
+          """.formatted(contestantName, winPercentage, variationFormatted);
     }
 
 
